@@ -10,7 +10,7 @@ sucessInit = pygame.init()
 SCREEN_SIZE = (600,800)
 
 # Camera view for the player see the game
-gameDisplay = pygame.display.set_mode(SCREEN_SIZE) # BOTTOM NOTE 1
+gameDisplay = pygame.display.set_mode() # Fullscreen mode
 
 # Update the screen
 pygame.display.update()
