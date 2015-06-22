@@ -1,21 +1,33 @@
 # Libaries import
 
 import pygame
+import time
 #==============================================================================
 # Functions
 
 # Show a message on screen
-def MessageToScreen(msg, color):
+def MessageToScreen(gameDisplay, textPos,msg, color):
+
+    # Type of font (ex: "arial", "comicsansms", "None")
+    typeFont = None
+
+    # Size of the font
+    sizeFont = 25
 
     # Standard font to screen output
-    FONT = pygame.font.SysFont(None, 25) # CHANGE THIS VALUES TO MEANING VALUES
+    FONT = pygame.font.SysFont(typeFont, sizeFont)
 
-    # Configure the font that will be printed with a text message, ? argumment and with a color
-    screenText = FONT.render(msg, True, color)
+    # Tells if the text will be smooth borders or not
+    ANTIALIAS = True
 
-    # Continue by here...
+    # Put the text on a new surface (PyGame not provides a way to do that in a existing surface)
+    screenText = FONT.render(msg, ANTIALIAS, color)
 
+    # Put the surface screenText on the gameDisplay surface 
+    gameDisplay.blit(screenText, textPos)
 
+     # Render the text on screen
+    pygame.display.update()
 
 # Primary function
 def Main():
@@ -29,15 +41,18 @@ def Main():
     RED = (255,0,0)
 
     # The defined size of the screen
-    SCREEN_WIDTH = 600
-    SCREEN_HEIGHT = 800
+    SCREEN_WIDTH = 800   
+    SCREEN_HEIGHT = 600
     SCREEN_SIZE = (SCREEN_WIDTH, SCREEN_HEIGHT)
 
     # Camera view for the player see the game
     gameDisplay = pygame.display.set_mode(SCREEN_SIZE) # BOTTOM NOTE 1
 
+    # Title of the window representing the name of the game
+    GAME_NAME = "Slither"
+
     # Set the title of window
-    pygame.display.set_caption('Slither')
+    pygame.display.set_caption(GAME_NAME)
 
     # Tells the the game will not quit or finish by now
     gameExit = False
@@ -45,6 +60,9 @@ def Main():
     # Coordinates and size to draw the Snake
     posSnake = {'x': SCREEN_WIDTH / 2, 'y': SCREEN_HEIGHT / 2}
     sizeSnake = {'x': 10, 'y': 10}
+
+    # Coordinates to put text on screen
+    textScreen = (SCREEN_WIDTH / 2 ,  SCREEN_HEIGHT / 2)
 
     # Receive values to exchange the Snake position
     changePos = {'x': 0, 'y': 0}
@@ -102,11 +120,11 @@ def Main():
                     changePos['y'] = BLOCK_CHANGE
                     changePos['x'] = 0
 
-                # If the snake overpass the limits of screen...
-                if posSnake['x'] < 0 or posSnake['x'] >= SCREEN_WIDTH or posSnake['y'] < 0 or posSnake['y'] >= SCREEN_HEIGHT:
+        # If the snake overpass the limits of screen... # Now, this check is right, oppostie of the previous tutorials codes
+        if posSnake['x'] < 0 or posSnake['x'] >= SCREEN_WIDTH or posSnake['y'] < 0 or posSnake['y'] >= SCREEN_HEIGHT:
 
-                    # End the game
-                    gameExit = True
+            # End the game
+            gameExit = True
 
         # Change the snake position
         posSnake['x'] += changePos['x']
@@ -127,6 +145,12 @@ def Main():
         # Control the update with Frames per second
         clock.tick(FPS) # BOTTOM NOTE 2
 
+    # Output game over message
+    MessageToScreen(gameDisplay, textScreen, "GAME OVER", RED)
+
+    # Wait some time to the player see the text
+    time.sleep(2)
+    
     # Unintilize the modules that have previously initialized 
     pygame.quit()
 
