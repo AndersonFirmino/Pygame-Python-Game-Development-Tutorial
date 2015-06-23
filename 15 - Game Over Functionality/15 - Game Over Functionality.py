@@ -61,14 +61,14 @@ def Main():
     gameOver = False
 
     # Coordinates and size to draw the Snake
-    posSnake = {'x': SCREEN_WIDTH / 2, 'y': SCREEN_HEIGHT / 2}
+    posSnake = {'x': SCREEN_WIDTH / 2, 'y': SCREEN_HEIGHT / 2} 
     sizeSnake = {'x': 10, 'y': 10}
 
     # Coordinates to put text on screen
     textScreen = (SCREEN_WIDTH / 2 ,  SCREEN_HEIGHT / 2)
 
     # Receive values to exchange the Snake position
-    changePos = {'x': 0, 'y': 0}
+    changePos = {'x': 0, 'y': 0} 
 
     # Tells how much the snake position will change
     BLOCK_CHANGE = 10
@@ -98,7 +98,7 @@ def Main():
                     gameExit = True
 
                 # If the player press some key...
-                if event.type == pygame.KEYDOWN:
+                elif event.type == pygame.KEYDOWN:
 
                     # If the player press the left key
                     if event.key == pygame.K_LEFT:
@@ -149,31 +149,34 @@ def Main():
                 gameOver = True
 
             # Control the update with Frames per second
-            clock.tick(FPS) # BOTTOM NOTE 2
+            clock.tick(FPS) # BOTTOM NOTE 
 
-    # Output game over message
-    MessageToScreen(gameDisplay, textScreen, "GAME OVER! Try Again? (y / n)", RED)
+        # Output game over message
+        MessageToScreen(gameDisplay, textScreen, "GAME OVER! Try Again? (y / n)", RED)
 
-    # Check for player answer
-    for event in pygame.event.get():
+        # Check for player answer
+        for event in pygame.event.get():
 
-        # Print the events in console
-        print(event)
+            # Print the events in console
+            print(event)
 
-        # If the player press the 'y' button
-        if event.key == K_y:
+            # If the event correspond a press of a key...
+            if event.type == pygame.KEYDOWN:
+            
+                # If the player press the 'y' button
+                if event.key == pygame.K_y:
 
-            # Restart the game loop
-            gameOver = False
+                    # Restart the game loop
+                    gameOver = False
 
-            # Put the snake in the inital position
-            posSnake = {'x': SCREEN_WIDTH / 2, 'y': SCREEN_HEIGHT / 2}
+                    # Put the snake in the inital position
+                    posSnake = {'x': SCREEN_WIDTH / 2, 'y': SCREEN_HEIGHT / 2}
 
-        # If the player press the 'n' button
-        elif event.key == K_n:
+                # If the player press the 'n' button
+                elif event.key == pygame.K_n:
 
-            # Turn the variable value to go out the loop (end of the game)
-            gameLoop = False
+                    # Turn the variable value to go out the loop (end of the game)
+                    gameLoop = False
             
     # Unintilize the modules that have previously initialized 
     pygame.quit()
